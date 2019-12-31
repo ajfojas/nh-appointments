@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import DoctorList from './DoctorList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,17 +11,31 @@ class App extends React.Component {
     // this.functionName = this.functionName.bind(this);
 
     this.state = {
-      // initialize states here
+      doctors: [],
     };
   }
 
   // function definitions / lifecycle methods here
   // functionName() {}
-  // componentDidMount() {}
+  componentDidMount() {
+    axios.get('/api/doctors')
+    .then(doctors => {
+      console.log(doctors.data.rows);
+      this.setState({
+        doctors: doctors.data.rows
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
 
   render() {
     return (
-      <BaseStyle>Hello world</BaseStyle>
+      <BaseStyle>
+        <div>PHYSICIANS</div>
+        <DoctorList doctors={this.state.doctors} />
+      </BaseStyle>
     )
   }
 }
