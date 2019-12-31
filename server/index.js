@@ -10,9 +10,30 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/getData/:param', (req, res) => {
-  let { param } = req.params;
-  db.getData(param, (error, data) => {
+app.get('/api/doctors', (req, res) => {
+  db.getAllDoctors((error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.status(200).send(data);
+    }
+  })
+});
+
+app.get('/api/doctor/:doctorFN/:doctorLN/day/:day', (req, res) => {
+  let { doctorFN, doctorLN, day } = req.params;
+  db.getDoctorsAppointment(doctorFN, doctorLN, day, (error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.status(200).send(data);
+    }
+  })
+});
+
+app.delete('/api/doctor/:doctorFN/:doctorLN/appointment/:date/:time', (req, res) => {
+  let { doctorFN, doctorLN, date, time } = req.params;
+  db.deleteAppointment(doctorFN, doctorLN, date, time, (error, data) => {
     if (error) {
       res.status(500).send(error);
     } else {
@@ -21,16 +42,15 @@ app.get('/api/getData/:param', (req, res) => {
   });
 });
 
-app.post('/api/postData/:param', (req, res) => {
-});
-
-app.get('/api/collection', (req, res) => {
-});
-
-app.delete('/api/collection/:cardID', (req, res) => {
-});
-
-app.delete('/api/collection', (req, res) => {
+app.post('/api/doctor/:doctorFN/:doctorLN/appointment/:patientFirstName/:patientLastName/:date/:time/:kind', (req, res) => {
+  let { doctorFN, doctorLN, patientFirstName, patientLastName, date, time, kind } = req.params;
+  db.postAppointment(doctorFN, doctorLN, patientFirstName, patientLastName, date, time, kind, (error, data) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.status(200).send(data);
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

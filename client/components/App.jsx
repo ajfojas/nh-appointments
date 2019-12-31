@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -28,5 +29,4 @@ export default App;
 
 // Styling
 const BaseStyle = styled.div`
-  background: #222;
 `;
