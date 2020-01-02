@@ -17,10 +17,10 @@ class App extends React.Component {
 
   // function definitions / lifecycle methods here
   // functionName() {}
+
   componentDidMount() {
     axios.get('/api/doctors')
     .then(doctors => {
-      console.log(doctors.data.rows);
       this.setState({
         doctors: doctors.data.rows
       })
@@ -33,7 +33,8 @@ class App extends React.Component {
   render() {
     return (
       <BaseStyle>
-        <div>PHYSICIANS</div>
+        <Notable>notable</Notable>
+        <Physicians>PHYSICIANS</Physicians>
         <DoctorList doctors={this.state.doctors} />
       </BaseStyle>
     )
@@ -44,4 +45,13 @@ export default App;
 
 // Styling
 const BaseStyle = styled.div`
+  font-family: sans-serif;
+`;
+
+const Notable = styled.h1`
+  color: #0073e6;
+`;
+
+const Physicians = styled.div`
+  font-weight: bold;
 `;

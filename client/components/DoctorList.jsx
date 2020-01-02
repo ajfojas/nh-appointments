@@ -7,11 +7,11 @@ class DoctorList extends React.Component {
   }
 
   render() {
-    let displayDoctors = this.props.doctors;
+    let doctors = this.props.doctors;
 
     return(
       <ul>
-        {displayDoctors.map(doctor => <DoctorEntry key={doctor.id} doctorName={doctor} />)}
+        {doctors.map(doctor => <DoctorEntry key={doctor.id} doctorName={doctor} />)}
       </ul>
     )
   }

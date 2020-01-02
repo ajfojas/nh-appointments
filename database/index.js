@@ -4,7 +4,7 @@ const pool = new Pool({
   host: 'localhost',
   user: 'student',
   password: 'student',
-  database: 'notable'
+  database: 'notableChallenge'
 });
 
 pool.connect();
@@ -30,7 +30,7 @@ const getDoctorsAppointment = function(doctorFN, doctorLN, day, callback) {
 };
 
 const deleteAppointment = function(doctorFN, doctorLN, date, time, callback) {
-  pool.query(`DELETE FROM appointments WHERE doctor_id = (SELECT id FROM doctors WHERE firstName = ${doctorFN} AND lastName = ${doctorLN}) AND date = ${date} AND time = ${time}`, (error, results, fields) => {
+  pool.query(`DELETE FROM appointments WHERE doctor_id = (SELECT id FROM doctors WHERE firstName = ${doctorFN} AND lastName = ${doctorLN}) AND date = ${date} AND time = ${time} ADD CONSTRAINT 'appointments_user_id_foreign' FOREIGN KEY (doctor_id) REFERENCES doctors (id) ON DELETE CASCADE`, (error, results, fields) => {
     if (error) {
       callback(error);
     } else {
